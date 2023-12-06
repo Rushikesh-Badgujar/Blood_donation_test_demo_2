@@ -1,0 +1,61 @@
+{
+  "name": "09a35101-341c-4dcd-8874-f109f64b0712",
+  "displayName": "Eligibility Quiz",
+  "form": {
+    "parameters": [ {
+      "displayName": "age",
+      "required": true,
+      "entityType": "@sys.number-integer",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+          "messages": [ {
+            "text": {
+              "text": [ "What is your age ?" ]
+            },
+            "languageCode": "en"
+          } ]
+        }
+      }
+    }, {
+      "displayName": "weight",
+      "required": true,
+      "entityType": "@sys.number-integer",
+      "fillBehavior": {
+        "initialPromptFulfillment": {
+          "messages": [ {
+            "text": {
+              "text": [ "what is your weight ?" ]
+            },
+            "languageCode": "en"
+          } ]
+        }
+      }
+    } ]
+  },
+  "entryFulfillment": {
+  
+  },
+  "transitionRoutes": [ {
+    "condition": "$session.params.status = \"FINAL\"",
+    "triggerFulfillment": {
+      "messages": [ {
+        "text": {
+          "text": [ "$request.generative.eligibility-outcome" ]
+        },
+        "languageCode": "en"
+      } ],
+      "generators": [ {
+        "generator": "projects/support-bpdb/locations/global/agents/92b33637-0841-4633-af85-7b661964f8a6/generators/f6f49549-6a6f-401e-8ce2-3691ef814ac2",
+        "inputParameters": [ {
+          "key": "age",
+          "value": "$session.params.age"
+        }, {
+          "key": "weight",
+          "value": "$session.params.weight"
+        } ],
+        "outputParameter": "$request.generative.eligibility-outcome"
+      } ]
+    },
+    "name": "578e343a-803a-45de-8d63-e2edef5fb54b"
+  } ]
+}
